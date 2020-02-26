@@ -78,6 +78,7 @@ class CompletionEventListener:
         Note: synchronous for now; can change to async by adding hide/show from the handler
         """
         info = get_info(view)
+        flags = sublime.INHIBIT_EXPLICIT_COMPLETIONS | sublime.INHIBIT_WORD_COMPLETIONS
         if info:
             info.completion_prefix_sel = decrease_locs_to_regions(locations, len(prefix))
             if not IS_ST2:
@@ -106,7 +107,7 @@ class CompletionEventListener:
             info.last_completion_loc = locations[0]
             self.pending_completions = []
             self.completions_ready = False
-            return completions, sublime.INHIBIT_EXPLICIT_COMPLETIONS
+            return completions, flags
 
     def handle_completion_info(self, completions_resp):
         """Helper callback when completion info received from server"""
